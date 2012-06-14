@@ -171,6 +171,14 @@ function remove_dashboard_widgets() {
 }
 
 /**
+ *  Remove update warning for non-admins.
+ */
+function remove_update_warning()
+{
+	remove_action('admin_notices', 'update_nag', 3);
+}
+
+/**
  *	Hide Menu Items in Admin
  */
 function themename_configure_dashboard_menu() {
@@ -196,6 +204,7 @@ function themename_configure_dashboard_menu() {
 // Don't forget to comment out the admin check to see that changes :)
 if (!current_user_can('manage_options')) {
 	add_action('wp_dashboard_setup', 'remove_dashboard_widgets'); // Add action to hide dashboard widgets
+	add_action('admin_init', 'remove_update_warning'); // Remove update nag - only admins need to worry about this
 	add_action('admin_head', 'themename_configure_dashboard_menu'); // Add action to hide admin menu items
 }
 
